@@ -32,7 +32,7 @@ async function init() {
       letter;
   }
 
-  // use tries to enter a guess
+  // user tries to enter a guess
   async function commit() {
     if (currentGuess.length !== ANSWER_LENGTH) {
       // do nothing
@@ -40,7 +40,6 @@ async function init() {
     }
 
     // check the API to see if it's a valid word
-    // skip this step if you're not checking for valid words
     isLoading = true;
     setLoading(isLoading);
     const res = await fetch("https://words.dev-apis.com/validate-word", {
@@ -124,8 +123,7 @@ async function init() {
     }
   }
 
-  // listening for event keys and routing to the right function
-  // we listen on keydown so we can catch Enter and Backspace
+  // listening to keydown to enter Backspace or Enter
   document.addEventListener("keydown", function handleKeyPress(event) {
     if (done || isLoading) {
       // do nothing;
@@ -146,9 +144,7 @@ async function init() {
   });
 }
 
-// a little function to check to see if a character is alphabet letter
-// this uses regex (the /[a-zA-Z]/ part) but don't worry about it
-// you can learn that later and don't need it too frequently
+// validating if the input is a letter
 function isLetter(letter) {
   return /^[a-zA-Z]$/.test(letter);
 }
@@ -158,10 +154,6 @@ function setLoading(isLoading) {
   loadingDiv.classList.toggle("hidden", !isLoading);
 }
 
-// takes an array of letters (like ['E', 'L', 'I', 'T', 'E']) and creates
-// an object out of it (like {E: 2, L: 1, T: 1}) so we can use that to
-// make sure we get the correct amount of letters marked close instead
-// of just wrong or correct
 function makeMap(array) {
   const obj = {};
   for (let i = 0; i < array.length; i++) {
